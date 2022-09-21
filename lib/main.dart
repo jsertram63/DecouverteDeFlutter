@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home:const HomePage()  // <------ on passe en argument HomePage le widget défini dans homepage.dart
+      home: HomePage()  // <------ on passe en argument HomePage le widget défini dans homepage.dart
    
     );
   }

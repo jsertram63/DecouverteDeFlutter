@@ -4,11 +4,12 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:live_futter_7septembre20222/cartepage.dart';
 import 'package:live_futter_7septembre20222/ennemipage.dart';
+
 //import 'package:live_futter_7septembre20222/monappbar.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
-
+   HomePage({super.key});
+  
   @override
   State<HomePage> createState() => _HomePageState();
 }
@@ -17,27 +18,66 @@ class HomePage extends StatefulWidget {
 
 
 class _HomePageState extends State<HomePage> {
+
+  int agilite = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(appBar:
     AppBar(
-      title:Text("Mon Heros"),
+      title:const Text("Mon Heros"),
       backgroundColor: Colors.green,),
     drawer: Drawer(
       child: ListView(
         children: [
-             const DrawerHeader(
-        decoration: BoxDecoration(
+              DrawerHeader(
+        decoration:const BoxDecoration(
           color: Colors.green,
         ),
-        child: Text('Menu'),
+        child: Column(children:const [
+          Text("Menu",style: TextStyle(fontFamily:"sansita",fontSize: 20),),
+          Padding(padding: EdgeInsets.only(top:10),
+          child:  SizedBox(
+              height: 100,
+              width: 100,
+              child: CircleAvatar(
+                                backgroundImage: AssetImage('assets/images/robot.png'),
+            
+              ),
+
+            ),
+          )
+
+
+
+        ],),
+     
+     
+     
+     
       ),
       ListTile(
-        title:const Text("Mon heros",style: TextStyle(
-          fontFamily:'Sansita',
-          fontWeight: FontWeight.w800,
-          fontSize: 20.0
-        ),),
+        title:Row(
+          children: const[
+              Padding(
+                padding: EdgeInsets.only(left: 5),
+                child: Icon(Icons.access_alarm,
+                size: 26.0,
+                color: Colors.black,
+
+                
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(left: 10),
+                child: Text("Mon heros",style: TextStyle(
+                fontFamily:'Sansita',
+                fontWeight: FontWeight.w800,
+                fontSize: 20.0
+            ),),
+              ),
+          ],
+        ),
         // onTap : gesture qui va prend en argument une fonction 
         onTap: (){
         
@@ -46,9 +86,21 @@ class _HomePageState extends State<HomePage> {
           print("Appui sur Mon heros");
         },
       ),
-      ListTile(title: Text("Ennemis",
-      
-style: TextStyle(fontFamily: "Sansita", fontWeight: FontWeight.w800,fontSize: 20.0),
+      ListTile(title: Row(
+        children:const [
+          Padding(
+            padding: EdgeInsets.only(left: 5),
+            child: Icon(Icons.fence_outlined,
+            color: Color.fromARGB(255, 201, 179, 143)),
+          ),
+          Padding(
+            padding: EdgeInsets.only(left: 10),
+            child: Text("Ennemis",
+            
+        style: TextStyle(fontFamily: "Sansita", fontWeight: FontWeight.w800,fontSize: 20.0),
+            ),
+          ),
+        ],
       ),
         onTap: (){
           Navigator.push(
@@ -58,11 +110,23 @@ style: TextStyle(fontFamily: "Sansita", fontWeight: FontWeight.w800,fontSize: 20
           print("ennemmi");
         },
       ),
-      ListTile(title: Text("Carte du monde",style: TextStyle(
-          fontFamily:'Sansita',
-          fontWeight: FontWeight.w800,
-          fontSize: 20.0
-        ),),
+      ListTile(title: Row(
+        children: const [
+          Padding(
+            padding: EdgeInsets.only(left: 5),
+            child: Icon(Icons.ac_unit_sharp,color: Colors.black,),
+          ),
+          
+          Padding(
+            padding: EdgeInsets.only(left:10.0),
+            child: Text("Carte du monde",style: TextStyle(
+                fontFamily:'Sansita',
+                fontWeight: FontWeight.w800,
+                fontSize: 20.0
+              ),),
+          ),
+        ],
+      ),
          onTap: (){
           print("carte du monde");
           Navigator.push(context, 
@@ -84,16 +148,17 @@ style: TextStyle(fontFamily: "Sansita", fontWeight: FontWeight.w800,fontSize: 20
         fontWeight: FontWeight.w800
       )),
       // circular Avatar pour afficher une image dans un rond
-      CircleAvatar(
-        backgroundColor: Colors.transparent,
-        radius: 100,
-        
-        
-         child: ClipRRect(
-        child: Image.asset('assets/images/robot.png',),
-        borderRadius: BorderRadius.circular(100.0),
-    ),
-      ),
+
+    SizedBox(
+              height: 150,
+              width: 150,
+              child: CircleAvatar(
+                                backgroundImage: AssetImage('assets/images/robot.png'),
+            
+              ),
+
+            ),
+      
       Divider(
         color: Colors.black,
         indent: 20,
@@ -103,7 +168,18 @@ style: TextStyle(fontFamily: "Sansita", fontWeight: FontWeight.w800,fontSize: 20
       Text("Mes caractéristiques",
       style: TextStyle(
         fontSize: 18.0
-      ),)
+      ),),TextField(
+        decoration: InputDecoration(hintText: "Entrez ton agilité",
+        border:OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
+      ),onChanged: (value) {
+        //print("valeur saisi : $value");
+        agilite = value as int;
+        print(agilite);
+       print("agilité : $agilite");
+
+      },),
+    
+      
       
       
       
