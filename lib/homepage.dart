@@ -21,6 +21,7 @@ class _HomePageState extends State<HomePage> {
 
    String nom="";
   String prenom="";
+  bool switchValue = true;
   late TextEditingController controller;
 
 
@@ -217,13 +218,20 @@ class _HomePageState extends State<HomePage> {
           decoration: InputDecoration(hintText:"Entrez ton Prenom", border: OutlineInputBorder(borderRadius: BorderRadius.circular(20))),
           controller: controller,
         ),
+      ),
+      Padding(padding:
+        const EdgeInsets.all(15),
+        child: Row(children: [
+          Text((switchValue ? "Homme" : "Femme")),
+          Switch(value: switchValue, onChanged: (bool){
+            setState(() {
+              switchValue = bool;
+              print(switchValue);
+            });
+          })
+
+        ]),
       )
-    
-      
-      
-      
-      
-      
     ]),
     );
   }
