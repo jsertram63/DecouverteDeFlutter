@@ -19,7 +19,34 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
 
-  int agilite = 0;
+   String nom="";
+  String prenom="";
+  late TextEditingController controller;
+
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    print("INIT");
+    super.initState();
+    controller = TextEditingController();
+    controller.addListener(_ecouteurTexte); // <----- on branche la fonction d'écoute
+  }
+    void  _ecouteurTexte() {
+  print("montrer texte saisie");
+  setState(() {
+    prenom = controller.text;
+    print(controller.text);
+  });
+}
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    controller.dispose();
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -168,16 +195,29 @@ class _HomePageState extends State<HomePage> {
       Text("Mes caractéristiques",
       style: TextStyle(
         fontSize: 18.0
-      ),),TextField(
-        decoration: InputDecoration(hintText: "Entrez ton agilité",
-        border:OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
-      ),onChanged: (value) {
-        //print("valeur saisi : $value");
-        agilite = value as int;
-        print(agilite);
-       print("agilité : $agilite");
+      ),),Padding(
+        padding: const EdgeInsets.all(15.0),
+        child: TextField(
+          decoration: InputDecoration(hintText: "Entrez ton nom",
+          border:OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
+        ),onChanged: (value) {
+          //print("valeur saisi : $value");
+          print("On changed");
+         setState(() {
+           nom = value;
+           print(nom);
+          
+         });
 
-      },),
+        },),
+      ),
+      Padding(
+        padding: const EdgeInsets.all(15.0),
+        child: TextField(
+          decoration: InputDecoration(hintText:"Entrez ton Prenom", border: OutlineInputBorder(borderRadius: BorderRadius.circular(20))),
+          controller: controller,
+        ),
+      )
     
       
       
@@ -187,4 +227,7 @@ class _HomePageState extends State<HomePage> {
     ]),
     );
   }
+
+
+
 }
