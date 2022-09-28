@@ -19,6 +19,12 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
 
+  Map<String,bool> caracteristiques = {
+    "diplome du super hero":false,
+    "apprenti":false,
+    "Medaille du courage":false
+  };
+
    String nom="";
   String prenom="";
   bool switchValue = true;
@@ -169,71 +175,128 @@ class _HomePageState extends State<HomePage> {
 
     ),
 
-    body:Column(children: [
-      Text("Flutter le heros",
-      style: TextStyle(
-        fontSize: 20.0,
-        fontWeight: FontWeight.w800
-      )),
-      // circular Avatar pour afficher une image dans un rond
-
-    SizedBox(
-              height: 150,
-              width: 150,
-              child: CircleAvatar(
-                                backgroundImage: AssetImage('assets/images/robot.png'),
-            
+    body:SingleChildScrollView(
+      child: Column(children: [
+        Text("Flutter le heros",
+        style: TextStyle(
+          fontSize: 20.0,
+          fontWeight: FontWeight.w800
+        )),
+        // circular Avatar pour afficher une image dans un rond
+    
+      SizedBox(
+                height: 150,
+                width: 150,
+                child: CircleAvatar(
+                                  backgroundImage: AssetImage('assets/images/robot.png'),
+              
+                ),
+    
               ),
-
-            ),
-      
-      Divider(
-        color: Colors.black,
-        indent: 20,
-        endIndent: 26,
-        thickness: 2,
-      ),
-      Text("Mes caractéristiques",
-      style: TextStyle(
-        fontSize: 18.0
-      ),),Padding(
-        padding: const EdgeInsets.all(15.0),
-        child: TextField(
-          decoration: InputDecoration(hintText: "Entrez ton nom",
-          border:OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
-        ),onChanged: (value) {
-          //print("valeur saisi : $value");
-          print("On changed");
-         setState(() {
-           nom = value;
-           print(nom);
-          
-         });
-
-        },),
-      ),
-      Padding(
-        padding: const EdgeInsets.all(15.0),
-        child: TextField(
-          decoration: InputDecoration(hintText:"Entrez ton Prenom", border: OutlineInputBorder(borderRadius: BorderRadius.circular(20))),
-          controller: controller,
+        
+        Divider(
+          color: Colors.black,
+          indent: 20,
+          endIndent: 26,
+          thickness: 2,
         ),
-      ),
-      Padding(padding:
-        const EdgeInsets.all(15),
-        child: Row(children: [
-          Text((switchValue ? "Homme" : "Femme")),
-          Switch(value: switchValue, onChanged: (bool){
-            setState(() {
-              switchValue = bool;
-              print(switchValue);
-            });
-          })
-
-        ]),
-      )
-    ]),
+        Text("Mes caractéristiques",
+        style: TextStyle(
+          fontSize: 18.0
+        ),),Padding(
+          padding: const EdgeInsets.all(15.0),
+          child: TextField(
+            decoration: InputDecoration(hintText: "Entrez ton nom",
+            border:OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
+          ),onChanged: (value) {
+            //print("valeur saisi : $value");
+            print("On changed");
+           setState(() {
+             nom = value;
+             print(nom);
+            
+           });
+    
+          },),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(15.0),
+          child: TextField(
+            decoration: InputDecoration(hintText:"Entrez ton Prenom", border: OutlineInputBorder(borderRadius: BorderRadius.circular(20))),
+            controller: controller,
+          ),
+        ),
+        Padding(padding:
+          const EdgeInsets.all(15),
+          child: Row(children: [
+            Text((switchValue ? "Homme" : "Femme")),
+            Switch(
+              activeColor: Colors.red,
+              value: switchValue, onChanged: (bool){
+              setState(() {
+                switchValue = bool;
+                print(switchValue);
+              });
+            })
+    
+          ]),
+        ),
+        Padding(padding: EdgeInsets.all(15),
+        child: constructListeDeChoix(),
+        ),
+       
+        Padding(padding: EdgeInsets.all(15),
+        child: Text(prenom),
+        ),
+         Padding(padding: EdgeInsets.all(15),
+        child: Text(nom),
+        ),
+        Padding(padding: EdgeInsets.all(15,),
+        child: recapCaracteristiques(),
+        )
+      ]),
+    ),
     );
+  }
+  // fonction qui va créer une colonne des items à cocher
+
+  Column constructListeDeChoix(){
+    List<Widget> items = [];
+    caracteristiques.forEach((caract, valide) {
+     Widget row = Row(children: [
+      Text(caract),
+      Checkbox(value:valide, onChanged: ((newValue){
+        setState(() {
+          // on met à jour notre tableau de caractéristiques
+          caracteristiques[caract] = newValue ?? false;
+        });
+      }))
+
+     ],);
+
+     items.add(row);
+     
+
+    });
+     return Column(children: items,);
+  } 
+
+  Column recapCaracteristiques(){
+    List<Widget> items = [];
+    // on parcours notre liste de caractéristiques
+    caracteristiques.forEach((cara, valide) {
+      if (valide == true){
+        Widget row = Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(cara)
+        ],);
+        items.add(row);
+      }
+     });
+     return Column(children: items);
+
+
   }
 
 
